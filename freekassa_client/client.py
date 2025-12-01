@@ -68,7 +68,7 @@ class FreeKassaClient:
         amount: Decimal,
         currency: str,
         payment_id: str,
-        payment_method_id: int,
+        payment_method_id: int = None,
     ):
         '''
         Creates a payment URL for redirecting the user to FreeKassa UI.
@@ -85,8 +85,9 @@ class FreeKassaClient:
             'currency': currency,
             'o': payment_id,
             's': signature,
-            'i': payment_method_id,
         }
+        if payment_method_id:
+            payload['i'] = payment_method_id
 
         return f'{self._ui_url}?{urlencode(payload)}'
 
@@ -147,10 +148,3 @@ class FreeKassaClient:
         r = requests.post(self._api_url + 'orders', json=payload, timeout=10)
         r.raise_for_status()
         return r.json()
-
-client = FreeKassaClient(
-    merchant_id=66058,
-    secret_word_1='2aJ0hR?0Z-[=VJ6',
-    secret_word_2='Hs)D3l&hb4(?xFf',
-    api_key='962c879ce9be06f9d34a556872869220',
-)

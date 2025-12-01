@@ -19,6 +19,9 @@ dependencies = [
     "requests>=2.32.5",
 ]
 
+[tool.hatch.build.targets.wheel]
+packages = ["freekassa_client"]
+
 [project.urls]
 Homepage = "https://github.com/418-th/freekassa"
 Source = "https://github.com/418-th/freekassa"
