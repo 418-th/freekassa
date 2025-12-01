@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "freekassa-client"
+version = "0.1.0"
+description = "Simple FreeKassa payment client for Python"
+authors = [
+    { name="Alexandr", email="ad.azarov17k@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10.0"
+license = {text = "MIT"}
+
+keywords = ["freekassa", "payment", "api", "ecommerce"]
+
+dependencies = [
+    "requests>=2.32.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/418-th/freekassa"
+Source = "https://github.com/418-th/freekassa"

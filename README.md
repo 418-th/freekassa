@@ -1,2 +1,3 @@
-# freekassa
-this is module for free kasska integrations
+# FreeKassa Client
+
+Simple Python client for FreeKassa payment gateway.
