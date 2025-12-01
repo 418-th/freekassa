@@ -165,3 +165,10 @@ class FreeKassaClient:
         r = requests.post(self._api_url + 'withdrawals/currencies', json=payload, timeout=10)
 
         return r.json()
+
+client = FreeKassaClient(
+    merchant_id=66058,
+    secret_word_1='2aJ0hR?0Z-[=VJ6',
+    secret_word_2='Hs)D3l&hb4(?xFf',
+    api_key='962c879ce9be06f9d34a556872869220',
+)
