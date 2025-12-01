@@ -135,7 +135,7 @@ class FreeKassaClient:
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': int(time.time()),
+            'nonce': int(time.time()) ** 2,
             'paymentId': payment_id,
         }
 
@@ -148,13 +148,13 @@ class FreeKassaClient:
         r.raise_for_status()
         return r.json()
 
-    def withdrawals_currencies(self):
+    def get_currencies(self):
         if not self._api_key:
             raise RuntimeError('API key is not set')
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': int(time.time()),
+            'nonce': int(time.time()) ** 2,
         }
 
         keys = sorted(payload.keys())
@@ -162,13 +162,6 @@ class FreeKassaClient:
 
         payload['signature'] = self.__hmac_sha256_hex(message, self._api_key)
 
-        r = requests.post(self._api_url + 'withdrawals/currencies', json=payload, timeout=10)
+        r = requests.post(self._api_url + 'currencies', json=payload, timeout=10)
 
         return r.json()
-
-client = FreeKassaClient(
-    merchant_id=66058,
-    secret_word_1='2aJ0hR?0Z-[=VJ6',
-    secret_word_2='Hs)D3l&hb4(?xFf',
-    api_key='962c879ce9be06f9d34a556872869220',
-)
