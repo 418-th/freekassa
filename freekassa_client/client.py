@@ -99,6 +99,7 @@ class FreeKassaClient:
             payment_id: str,
             amount: Decimal,
             currency: str,
+            nonce: int = None,
     ):
         '''
         :keyword amount: required for API calls | amount to be paid
@@ -111,7 +112,7 @@ class FreeKassaClient:
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': int(time.time()),
+            'nonce': nonce if nonce else int(time.time()),
             'amount': f'{amount:.2f}',
             'currency': currency,
             'paymentId': payment_id,
@@ -129,13 +130,13 @@ class FreeKassaClient:
 
         return r.json()
 
-    def api_get_order(self, payment_id: str):
+    def api_get_order(self, payment_id: str, nonce: int = None):
         if not self._api_key:
             raise RuntimeError('API key is not set')
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': int(time.time()) ** 2,
+            'nonce': nonce if nonce else int(time.time()),
             'paymentId': payment_id,
         }
 
@@ -148,13 +149,13 @@ class FreeKassaClient:
         r.raise_for_status()
         return r.json()
 
-    def get_currencies(self):
+    def get_currencies(self, nonce: int = None):
         if not self._api_key:
             raise RuntimeError('API key is not set')
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': int(time.time()) ** 2,
+            'nonce': nonce if nonce else int(time.time()),
         }
 
         keys = sorted(payload.keys())

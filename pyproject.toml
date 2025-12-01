@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "freekassa-client"
-version = "0.1.5"
+version = "0.1.6"
 description = "Simple FreeKassa payment client for Python"
 authors = [
     { name="Alexandr", email="ad.azarov17k@gmail.com" }
