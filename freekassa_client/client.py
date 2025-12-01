@@ -1,5 +1,7 @@
 import hashlib
 import hmac
+import time
+
 import requests
 from urllib.parse import urlencode
 from decimal import Decimal
@@ -26,7 +28,6 @@ class FreeKassaClient:
         notify_url: str = None,
         api_url: str = None,
         ui_url: str = None,
-        nonce: int = 1,
     ):
         self._merchant_id = merchant_id
         self._secret1 = secret_word_1
@@ -37,7 +38,6 @@ class FreeKassaClient:
         self._notify_url = notify_url
         self._api_url = 'https://api.fk.life/v1/'
         self._ui_url = 'https://pay.fk.money/'
-        self._nonce = nonce
 
         if api_url:
             self._api_url = api_url
@@ -93,7 +93,6 @@ class FreeKassaClient:
 
     def api_create_order(
             self,
-            nonce: int,
             i: int,
             user_email: str,
             user_ip: str,
@@ -112,7 +111,7 @@ class FreeKassaClient:
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': nonce,
+            'nonce': int(time.time()),
             'amount': f'{amount:.2f}',
             'currency': currency,
             'paymentId': payment_id,
@@ -136,7 +135,7 @@ class FreeKassaClient:
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': self._nonce,
+            'nonce': int(time.time()),
             'paymentId': payment_id,
         }
 
@@ -155,7 +154,7 @@ class FreeKassaClient:
 
         payload = {
             'shopId': self._merchant_id,
-            'nonce': self._nonce,
+            'nonce': int(time.time()),
         }
 
         keys = sorted(payload.keys())
