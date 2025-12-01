@@ -148,3 +148,21 @@ class FreeKassaClient:
         r = requests.post(self._api_url + 'orders', json=payload, timeout=10)
         r.raise_for_status()
         return r.json()
+
+    def withdrawals_currencies(self):
+        if not self._api_key:
+            raise RuntimeError('API key is not set')
+
+        payload = {
+            'shopId': self._merchant_id,
+            'nonce': self._nonce,
+        }
+
+        keys = sorted(payload.keys())
+        message = '|'.join(str(payload[k]) for k in keys)
+
+        payload['signature'] = self.__hmac_sha256_hex(message, self._api_key)
+
+        r = requests.post(self._api_url + 'withdrawals/currencies', json=payload, timeout=10)
+
+        return r.json()
